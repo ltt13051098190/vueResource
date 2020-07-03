@@ -1,7 +1,7 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
-    <KForm :model="model">
+    <KForm :model="model" :rules="rules" ref="loginForm">
       <KFormItem label='用户名' prop="username">
         <KInput v-model="model.username" placeholder="请输入username"></KInput>  
         <p>{{model}}</p>
@@ -10,6 +10,10 @@
         <KInput v-model="model.password" type="password" placeholder="请输入password"></KInput>  
         <p>{{model}}</p>
       </KFormItem>
+      <KFormItem>
+        <button @click="login">登录</button>
+      </KFormItem>
+
     </KForm>
   </div>
 </template>
@@ -28,12 +32,34 @@ export default {
       model: {
         username: 'ltt',
         password: ''
+      },
+      rules: {
+        username: [{
+          required: true,
+          message: 'qing shu ru username'
+        }],
+        password: [{
+          required: true,
+          message: 'qing shu ru password'
+        }]
       }
+
     }
   },
   props: {
     msg: String
-  }
+  },
+  methods: {
+    login() {
+      this.$refs.loginForm.validate(isValid=>{
+        if(isValid){
+          console.log('requese login')
+        }else {
+          alert('jiaoyan shibai')
+        }
+      })
+    }
+  },
 }
 </script>
 

@@ -22,6 +22,8 @@
             onInput(e) {
                 // 事件派发
                 this.$emit('input', e.target.value)
+                // this.$emit('validate')
+                this.$parent.$emit('validate')
             }
         },
         
