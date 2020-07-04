@@ -7,11 +7,17 @@ class KVueRouter{
     constructor (options){
         KVue;
         this.$options = options;
+        // 缓存路由关系
+        this.routeMap = {};
+        this.$options.routes.forEach((route)=>{
+            this.routeMap[route.path] = route
+        })
         // KVue.util.defineReactive  实现数据响应
         const initial = window.location.hash.slice(1)|| '/'
         KVue.util.defineReactive(this, 'current', initial)
         // this.current = '/'
         window.addEventListener('hashchange', this.onHashChange.bind(this))
+        window.addEventListener('load', this.onHashChange.bind(this))
     }
     onHashChange(){
         this.current = window.location.hash.slice(1)
@@ -59,9 +65,9 @@ KVueRouter.install =function (Vue) {
           // 获取路由实例
           // 需要获取路由表表 routes
           render(h){
-           const routes = this.$router.$options.routes;
+        //    const routes = this.$router.$options.routes;
            const current = this.$router.current;
-           const route= routes.find(route=> route.path === current)
+           const route= this.$router.routeMap[current]
            const comp = route? route.component: null
            return h(comp)
           }

@@ -1,6 +1,9 @@
 <template>
   <div class="hello">
     <h1>{{ msg }}</h1>
+    <p @click="$store.commit('add')">counter :{{$store.state.counter}}</p>
+    <p @click="$store.dispatch('add')">async counter :{{$store.state.counter}}</p>
+    <p>dbcounter: {{$store.getters.dbcouter}}</p>
     <KForm :model="model" :rules="rules" ref="loginForm">
       <KFormItem label='用户名' prop="username">
         <KInput v-model="model.username" placeholder="请输入username"></KInput>  
